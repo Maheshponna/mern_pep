@@ -1,11 +1,6 @@
-
-// import { Link } from 'react-router-dom';
-import LinksDashboard from './links/LinksDashboard';
-
+import LinksDashboard from "./links/LinksDashboard";
 
 function Dashboard({ userDetails, setUserDetails }) {
-  
-
   return (
     <div className="container text-center">
       <LinksDashboard />

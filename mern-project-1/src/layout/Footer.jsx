@@ -1,11 +1,10 @@
-function Footer() {
-  return (
-        <div className="container-fluid bg-light
-    text-center py-3">
-    All rights reserved.
-    </div>
-   
-  );
-}
+import React from "react";
+const Footer = () => {
+    return (
+        <div className="container-fluid bg-light text-center py-3">
+            All rights reserved.
+        </div>
+    );
+};
 
-export default Footer; 
+export default Footer;

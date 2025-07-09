@@ -1,9 +1,11 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require("express"); // Include the express module
-
+const paymentRoutes = require('./src/routes/paymentRoutes')
 const authRoutes = require("./src/routes/authRoutes");
 const linksRoutes = require('./src/routes/linksRoutes');
+const userRouutes = require('./src/routes/userRoutes');
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -12,7 +14,14 @@ mongoose.connect(process.env.MONGO_URI).then(()=>console.log('MongoDB connected'
 
 const app = express(); // Instantiate express app.
 
-app.use(express.json()); // Middleware to convert json to javascript object
+app.use((request, response, next) => {
+  // Skip json middleware for the webhook endpoint
+  if (request.originalUrl.startsWith("/payments/webhook")) {
+    next();
+  }
+
+  express.json()(request, response, next);
+});
 app.use(cookieParser());
 
 const corsOptions = {
@@ -22,6 +31,8 @@ const corsOptions = {
 app.use(cors(corsOptions ));
 app.use("/auth", authRoutes);
 app.use('/links',linksRoutes);
+app.use('/users',userRouutes);
+app.use('/payments',paymentRoutes)
 const PORT = 5001;
 app.listen(5001, (error) => {
   if (error) {
